@@ -1,5 +1,28 @@
 from tkinter import *      # importing libraries 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def encryption(stringtext, n):    # here the stringtext is the sentence of word to be shifted by n times to be encrypted
     uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' #defining capital letters
     lowercase = 'abcdefghijklmnopqrstuvwxyz' #defining small letters 
@@ -41,6 +64,23 @@ def on_encrypt():  # the process of the encrypt button
         error_message = "Please enter a valid number for the shift"
         print(error_message)
         result_label.config(text=error_message)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # the gui layout 
