@@ -89,11 +89,11 @@ btn_increase.grid(row=2, column=1, sticky="e")
 button1 = Button(window, text='Decrypt', fg='white', bg='blue', font=('Arial', 12), command=decryption, relief='raised')
 button1.grid(row=3, column=1, pady=10)
 
-# Result 
+# result 
 result_label = Label(window, text="", fg='black', bg='orange', font=('Arial', 12))
 result_label.grid(row=4, column=1, pady=10)
 
-# Copy button
+# Copy
 copy_button = Button(window, text="", fg='black', bg='orange', font=('Arial', 12))
 copy_button.grid(row=5, column=1, pady=10)
 
@@ -101,5 +101,4 @@ copy_button.grid(row=5, column=1, pady=10)
 error_label = Label(window, text="", fg='red', bg='orange',font=('Arial', 10, 'italic'))
 error_label.grid(row=5, column=1, pady=5, sticky='nsew')
 
-# Run the main loop
 window.mainloop()

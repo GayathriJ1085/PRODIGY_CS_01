@@ -1,6 +1,7 @@
 from tkinter import *
 import clipboard
 
+#process
 def encryption(stringtext, n):
     uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     lowercase = 'abcdefghijklmnopqrstuvwxyz'
@@ -21,6 +22,7 @@ def encryption(stringtext, n):
             
     return ips
 
+#check shift number
 def is_valid_shift(shift):
     return shift.isdigit()
 
@@ -32,22 +34,23 @@ def on_encrypt():
         n = int(shift)
         ciphertext = encryption(stringtext, n)
         result_label.config(text=f"{ciphertext}")
-        
-        # Ensure the copy button appears only after encryption
         copy_button = Button(window, text="Copy Result", command=copy_result)
         copy_button.grid(row=5, column=1, pady=10)
+        
     else:
-        error_label.config(text="Please enter a valid shift (positive and Whole number).")
+        error_label.config(text="Warning! Please enter a positive whole number for shift.")
 
+#-
 def decrease():
     current_value = int(lbl_value["text"])
     lbl_value["text"] = str(current_value - 1)
 
+#+
 def increase():
     current_value = int(lbl_value["text"])
     lbl_value["text"] = str(current_value + 1)
 
-# Copy the result
+# result and encryption button
 def copy_result():
     clipboard.copy(result_label["text"])
 
@@ -57,11 +60,11 @@ window.title('Caesar Cipher Encryption')
 window.geometry("500x300")
 window.configure(bg='yellow')
 
-#1st line
+#introduction
 label1 = Label(window, text="Encrypt Message", fg='black',bg='yellow', font=('Stencil', 25, 'bold'))
 label1.grid(row=0, column=1, pady=10)
 
-#string entry
+#string
 l1 = Label(window, text="Enter text: ", fg='black',bg='yellow', font=('Arial', 12,'bold'))
 l1.grid(row=1, column=0, pady=10)
 text1 = Entry(window, font=('Arial', 12), width=40, relief='groove')
@@ -89,10 +92,8 @@ button1.grid(row=3, column=1, pady=10)
 result_label = Label(window, text="", fg='black',bg='yellow', font=('Arial', 12))
 result_label.grid(row=4, column=1, pady=10)
 
-#error label
+#warning
 error_label = Label(window, text="", fg='red', bg='yellow',font=('Arial', 10, 'italic'))
 error_label.grid(row=5, column=1, pady=5, sticky='nsew')
-
-
 
 window.mainloop()
