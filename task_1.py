@@ -1,72 +1,105 @@
-import tkinter as tk
+from tkinter import *
+import clipboard
 
-# Decryption function
+#process
 def decrypt(m, string_text):
-    upper_case = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" 
-    lower_case = "abcdefghijklmnopqrstuvwxyz"
-    ips2 = ""
+    uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    lowercase = 'abcdefghijklmnopqrstuvwxyz'
+    
+    ips = ""
     
     for j in string_text:
-        if j in idx2:
-            idx2 = upper_case.find(j)
-            new_idx2 = (idx2 - m) % len(upper_case)
-            ips2 += upper_case[new_idx2]
-            
-        elif j in lower_case:
-            idx2 = lower_case.find(j)
-            new_idx2 = (idx2 - m) % len(lower_case)
-            ips2 += lower_case[new_idx2]
-            
+        if j in uppercase:
+            idx = uppercase.find(j)
+            new_idx = (idx - m) % len(uppercase)
+            ips += uppercase[new_idx]
+        elif j in lowercase:
+            idx = lowercase.find(j)
+            new_idx = (idx - m) % len(lowercase)
+            ips += lowercase[new_idx]
         else:
-            ips2 += j
-    return ips2
+            ips += j
+            
+    return ips
 
-
-# process of shift number
+#check the  shift number
 def is_valid_shift(shift):
     return shift.isdigit()
 
-# process of the button 
+#-
+def decrease():
+    current_value = int(lbl_value["text"])
+    lbl_value["text"] = str(current_value - 1)
+
+#+
+def increase():
+    current_value = int(lbl_value["text"])
+    lbl_value["text"] = str(current_value + 1)
+
+#result and decrytion button
 def decryption():
-    string_text = text_entry.get()  
-    shift = shift_entry.get() 
+    string_text = text_entry.get()
+    shift = lbl_value["text"]
     
-    if is_valid_shift(shift):  
-        m = int(shift)  
-        plaintext = decrypt(m, string_text)  
-        result_label.config(text=f"Plain Text is: {plaintext}")  
+    if is_valid_shift(shift):
+        m = int(shift)
+        plaintext = decrypt(m, string_text)
+        result_label.config(text=f"{plaintext}")
+        copy_button = Button(window, text="Copy Result", command=copy_result)
+        copy_button.grid(row=5, column=1, pady=10)
         
-    else:  
-        error_message = "Please enter a valid number for the shift"  
-        result_label.config(text=error_message)  
+    else:
+        error_label.config(text="Warning! Please enter a positive whole number for shift")
 
-# the window
-window = tk.Tk()
-window.title('Decryption')
 
-# label
-label1 = tk.Label(window, text="Decrypt your text", fg='black', font=('Times New Roman', 18))
-label1.grid(row=0, columnspan=2, pady=25)
+def copy_result():
+    clipboard.copy(result_label["text"])
 
-#string entry
-l1 = tk.Label(window, text="Enter text:", fg='black', font=('Times New Roman', 12))
-l1.grid(row=1, column=0, pady=25, padx=50)
-text_entry = tk.Entry(window, font=('Times New Roman', 12))
+#window
+window = Tk()
+window.title('Caesar Cipher Decryption')
+window.geometry("500x300")
+window.configure(bg='orange')
+
+#introduction
+label1 = Label(window, text="Decrypt Message", fg='black',bg='orange', font=('Stencil', 25, 'bold'))
+label1.grid(row=0, column=1, pady=10)
+
+#string
+l1 = Label(window, text="Enter text: ", fg='black', bg='orange', font=('Arial', 12,'bold'))
+l1.grid(row=1, column=0, pady=10)
+text_entry = Entry(window, font=('Arial', 12), width=40, relief='groove')
 text_entry.grid(row=1, column=1)
 
-#shift number entry
-shift_label = tk.Label(window, text="Enter shift:", fg='black', font=('Times New Roman', 12))
-shift_label.grid(row=2, column=0, pady=25, padx=50)
-shift_entry = tk.Entry(window, font=('Times New Roman', 12))
-shift_entry.grid(row=2, column=1)
+# Shift number
+shift_label = Label(window, text="Shift:", fg='black', bg='orange', font=('Arial', 12,'bold'))
+shift_label.grid(row=2, column=0, pady=10)
+lbl_value = Label(master=window, text="0", bg='orange', font=('Arial', 12), relief='groove')
+lbl_value.grid(row=2, column=1, pady=10)
 
-# button 
-button1 = tk.Button(window, text='Decrypt', fg='blue', font=('Times New Roman', 12), command=decryption, relief='raised')
-button1.grid(row=3, column=1, pady=25)
+# decrement
+btn_decrease = Button(window, text="-", command=decrease, bg='green', font=('Arial', 12,'bold'), relief='groove')
+btn_decrease.grid(row=2, column=1, sticky="e", padx=(0, 70))
 
-#Result
-result_label = tk.Label(window, text="", fg='black', font=('Arial', 12))
-result_label.grid(row=4, columnspan=2, pady=25)
+# Increment
+btn_increase = Button(window, text="+", command=increase, bg='green', font=('Arial', 12,'bold'), relief='groove')
+btn_increase.grid(row=2, column=1, sticky="e")
+
+# button
+button1 = Button(window, text='Decrypt', fg='white', bg='blue', font=('Arial', 12), command=decryption, relief='raised')
+button1.grid(row=3, column=1, pady=10)
+
+# Result 
+result_label = Label(window, text="", fg='black', bg='orange', font=('Arial', 12))
+result_label.grid(row=4, column=1, pady=10)
+
+# Copy button
+copy_button = Button(window, text="", fg='black', bg='orange', font=('Arial', 12))
+copy_button.grid(row=5, column=1, pady=10)
+
+#warning
+error_label = Label(window, text="", fg='red', bg='orange',font=('Arial', 10, 'italic'))
+error_label.grid(row=5, column=1, pady=5, sticky='nsew')
 
 # Run the main loop
 window.mainloop()
